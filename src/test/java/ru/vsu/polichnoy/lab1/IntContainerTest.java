@@ -123,4 +123,141 @@ class IntContainerTest {
         assertThrows(IndexOutOfBoundsException.class, () -> container.removeAt(-1));
         assertThrows(IndexOutOfBoundsException.class, () -> container.removeAt(1));
     }
+
+    @Test
+    void addByIndexShouldInsertValueIntoMiddle() {
+        IntContainer container = new IntContainer();
+
+        container.add(10);
+        container.add(30);
+        container.add(40);
+
+        container.add(1, 20);
+
+        assertArrayEquals(new int[]{10, 20, 30, 40}, container.toArray());
+    }
+
+    @Test
+    void addByIndexShouldInsertValueAtBeginning() {
+        IntContainer container = new IntContainer();
+
+        container.add(20);
+        container.add(30);
+
+        container.add(0, 10);
+
+        assertArrayEquals(new int[]{10, 20, 30}, container.toArray());
+    }
+
+    @Test
+    void addByIndexShouldInsertValueAtEnd() {
+        IntContainer container = new IntContainer();
+
+        container.add(10);
+        container.add(20);
+
+        container.add(2, 30);
+
+        assertArrayEquals(new int[]{10, 20, 30}, container.toArray());
+    }
+
+    @Test
+    void addByIndexShouldRejectInvalidPosition() {
+        IntContainer container = new IntContainer();
+
+        container.add(10);
+
+        assertThrows(IndexOutOfBoundsException.class, () -> container.add(-1, 20));
+        assertThrows(IndexOutOfBoundsException.class, () -> container.add(2, 20));
+    }
+
+    @Test
+    void indexOfShouldReturnFirstMatchingIndex() {
+        IntContainer container = new IntContainer();
+
+        container.add(10);
+        container.add(20);
+        container.add(20);
+        container.add(30);
+
+        assertEquals(1, container.indexOf(20));
+        assertEquals(-1, container.indexOf(99));
+    }
+
+    @Test
+    void containsShouldCheckValuePresence() {
+        IntContainer container = new IntContainer();
+
+        container.add(10);
+        container.add(20);
+
+        assertTrue(container.contains(10));
+        assertTrue(container.contains(20));
+        assertFalse(container.contains(99));
+    }
+
+    @Test
+    void removeValueShouldRemoveFirstOccurrence() {
+        IntContainer container = new IntContainer();
+
+        container.add(10);
+        container.add(20);
+        container.add(20);
+        container.add(30);
+
+        boolean result = container.removeValue(20);
+
+        assertTrue(result);
+        assertArrayEquals(new int[]{10, 20, 30}, container.toArray());
+    }
+
+    @Test
+    void removeValueShouldReturnFalseIfValueDoesNotExist() {
+        IntContainer container = new IntContainer();
+
+        container.add(10);
+        container.add(20);
+
+        boolean result = container.removeValue(99);
+
+        assertFalse(result);
+        assertArrayEquals(new int[]{10, 20}, container.toArray());
+    }
+
+    @Test
+    void clearShouldRemoveAllElements() {
+        IntContainer container = new IntContainer();
+
+        container.add(10);
+        container.add(20);
+
+        container.clear();
+
+        assertEquals(0, container.size());
+        assertTrue(container.isEmpty());
+    }
+
+    @Test
+    void toArrayShouldReturnCopyOfStoredElements() {
+        IntContainer container = new IntContainer();
+
+        container.add(10);
+        container.add(20);
+
+        int[] array = container.toArray();
+        array[0] = 999;
+
+        assertEquals(10, container.get(0));
+    }
+
+    @Test
+    void toStringShouldReturnReadableRepresentation() {
+        IntContainer container = new IntContainer();
+
+        container.add(10);
+        container.add(20);
+        container.add(30);
+
+        assertEquals("[10, 20, 30]", container.toString());
+    }
 }

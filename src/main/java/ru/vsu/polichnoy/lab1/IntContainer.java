@@ -29,13 +29,28 @@ public class IntContainer {
         size++;
     }
 
+    public void add(int index, int value) {
+        checkPositionIndex(index);
+
+        if (size == elements.length) {
+            grow();
+        }
+
+        for (int i = size; i > index; i--) {
+            elements[i] = elements[i - 1];
+        }
+
+        elements[index] = value;
+        size++;
+    }
+
     public int get(int index) {
-        checkIndex(index);
+        checkElementIndex(index);
         return elements[index];
     }
 
     public int removeAt(int index) {
-        checkIndex(index);
+        checkElementIndex(index);
 
         int removedValue = elements[index];
 
@@ -48,12 +63,70 @@ public class IntContainer {
         return removedValue;
     }
 
+    public int indexOf(int value) {
+        for (int i = 0; i < size; i++) {
+            if (elements[i] == value) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public boolean contains(int value) {
+        return indexOf(value) != -1;
+    }
+
+    public boolean removeValue(int value) {
+        int index = indexOf(value);
+
+        if (index == -1) {
+            return false;
+        }
+
+        removeAt(index);
+        return true;
+    }
+
+    public void clear() {
+        size = 0;
+    }
+
     public int size() {
         return size;
     }
 
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    public int[] toArray() {
+        int[] result = new int[size];
+
+        for (int i = 0; i < size; i++) {
+            result[i] = elements[i];
+        }
+
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("[");
+
+        for (int i = 0; i < size; i++) {
+            builder.append(elements[i]);
+
+            if (i < size - 1) {
+                builder.append(", ");
+            }
+        }
+
+        builder.append("]");
+
+        return builder.toString();
     }
 
     private void grow() {
@@ -67,10 +140,18 @@ public class IntContainer {
         elements = newElements;
     }
 
-    private void checkIndex(int index) {
+    private void checkElementIndex(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException(
                     "Index " + index + " is out of bounds for size " + size
+            );
+        }
+    }
+
+    private void checkPositionIndex(int index) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException(
+                    "Index " + index + " is out of bounds for insertion into size " + size
             );
         }
     }
