@@ -1,5 +1,9 @@
 package ru.vsu.polichnoy.lab1;
 
+/**
+ * Демонстрационный класс для проверки основных операций контейнера.
+ */
+
 public class Main {
 
     public static void main(String[] args) {
