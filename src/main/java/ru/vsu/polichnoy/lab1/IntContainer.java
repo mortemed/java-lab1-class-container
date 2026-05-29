@@ -4,7 +4,7 @@ public class IntContainer {
 
     private static final int DEFAULT_CAPACITY = 10;
 
-    private final int[] elements;
+    private int[] elements;
     private int size;
 
     public IntContainer() {
@@ -22,7 +22,7 @@ public class IntContainer {
 
     public void add(int value) {
         if (size == elements.length) {
-            throw new IllegalStateException("Container is full");
+            grow();
         }
 
         elements[size] = value;
@@ -40,6 +40,17 @@ public class IntContainer {
 
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    private void grow() {
+        int newCapacity = elements.length * 2;
+        int[] newElements = new int[newCapacity];
+
+        for (int i = 0; i < size; i++) {
+            newElements[i] = elements[i];
+        }
+
+        elements = newElements;
     }
 
     private void checkIndex(int index) {

@@ -47,12 +47,17 @@ class IntContainerTest {
     }
 
     @Test
-    void addShouldRejectValueWhenContainerIsFull() {
+    void addShouldGrowContainerWhenCapacityIsExceeded() {
         IntContainer container = new IntContainer(2);
 
         container.add(10);
         container.add(20);
+        container.add(30);
 
-        assertThrows(IllegalStateException.class, () -> container.add(30));
+        assertEquals(3, container.size());
+
+        assertEquals(10, container.get(0));
+        assertEquals(20, container.get(1));
+        assertEquals(30, container.get(2));
     }
 }
