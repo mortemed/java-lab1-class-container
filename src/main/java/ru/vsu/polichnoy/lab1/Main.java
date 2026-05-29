@@ -8,10 +8,15 @@ public class Main {
         container.add(10);
         container.add(20);
         container.add(30);
+        container.add(40);
 
-        System.out.println("Container size: " + container.size());
-        System.out.println("First element: " + container.get(0));
-        System.out.println("Second element: " + container.get(1));
-        System.out.println("Third element: " + container.get(2));
+        System.out.println("Container size before removing: " + container.size());
+        System.out.println("Element at index 1 before removing: " + container.get(1));
+
+        int removedValue = container.removeAt(1);
+
+        System.out.println("Removed value: " + removedValue);
+        System.out.println("Container size after removing: " + container.size());
+        System.out.println("Element at index 1 after removing: " + container.get(1));
     }
 }

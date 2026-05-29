@@ -34,6 +34,20 @@ public class IntContainer {
         return elements[index];
     }
 
+    public int removeAt(int index) {
+        checkIndex(index);
+
+        int removedValue = elements[index];
+
+        for (int i = index; i < size - 1; i++) {
+            elements[i] = elements[i + 1];
+        }
+
+        size--;
+
+        return removedValue;
+    }
+
     public int size() {
         return size;
     }
